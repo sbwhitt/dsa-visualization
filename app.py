@@ -1,5 +1,7 @@
 import pygame
-import utils as utils
+import utils.colors as colors
+from graph.vertex import Vertex
+from graph.edge import Edge
 
 win_size = (960, 720)
 
@@ -8,6 +10,9 @@ class App:
         self.running = True
         self.surf = pygame.display.set_mode(
             win_size, pygame.SCALED | pygame.RESIZABLE | pygame.DOUBLEBUF)
+        self.font = self._init_font()
+        self.verts = [Vertex('a', pos=(100, 100)), Vertex('b', pos=(100, 200)), Vertex('c', pos=(200, 150))]
+        self.edges = [Edge(self.verts[0], self.verts[1]), Edge(self.verts[0], self.verts[2])]
 
     def on_execute(self) -> None:
         self.on_init()
@@ -26,21 +31,23 @@ class App:
     def on_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.QUIT:
             self.running = False
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            self.running = False
 
     def on_loop(self) -> None:
         pass
 
     def on_render(self) -> None:
-        self.surf.fill(pygame.Color(0, 0, 0))
-        mouse_pos = pygame.mouse.get_pos()
-        pygame.draw.lines(
-            self.surf,
-            pygame.Color(255, 0, 0),
-            True,
-            utils.get_rect_outline(pygame.rect.Rect(mouse_pos[0], mouse_pos[1], 100, 100))
-        )
+        self.surf.fill(colors.BLACK)
+
+        for e in self.edges: e.render(self.surf)
+        for v in self.verts: v.render(self.surf, self.font)
 
         pygame.display.flip()
 
     def on_cleanup(self) -> None:
         pass
+
+    def _init_font(self) -> pygame.font.Font:
+        pygame.font.init()
+        return pygame.font.Font(pygame.font.get_default_font(), 16)

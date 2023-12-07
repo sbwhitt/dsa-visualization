@@ -31,11 +31,11 @@ class Graph:
             'b': [self.verts['d']],
             'c': [self.verts['e']],
             'd': [self.verts['g']],
-            'e': [self.verts['h']],
-            'f': [self.verts['h']],
+            'e': [self.verts['d'], self.verts['h']],
+            'f': [],
             'g': [self.verts['j']],
             'h': [self.verts['m']],
-            'i': [self.verts['f'], self.verts['k']],
+            'i': [self.verts['e'], self.verts['f'], self.verts['k']],
             'j': [],
             'k': [self.verts['l']],
             'l': [],
@@ -74,6 +74,9 @@ class Graph:
                 Edge(self.verts[k], vert).render(surf)
         for _, v in self.verts.items():
             v.render(surf, font)
+
+    def get_vertices(self) -> list[Vertex]:
+        return [v for _, v in self.verts.items()]
 
     def _reset(self) -> None:
         self.loop_timer = 0

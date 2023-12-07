@@ -15,6 +15,7 @@ class App:
         self.g = Graph()
         self.clock = pygame.time.Clock()
         self.ui = UI(win_size)
+        self.ui.add_elements(self.g.get_vertices())
 
     def on_execute(self) -> None:
         self.on_init()

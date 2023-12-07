@@ -1,10 +1,12 @@
+from ui.clickable import ClickableElement
 from pygame import draw
 from pygame.surface import Surface
 from pygame.font import Font
 from pygame.color import Color
+from utils.helpers import get_rect_from_circle
 import utils.colors as colors
 
-class Vertex:
+class Vertex(ClickableElement):
     def __init__(self,
                  label: str,
                  pos: tuple[int, int] = (10, 10),
@@ -21,6 +23,9 @@ class Vertex:
         draw.circle(surf, self.color, self.pos, self.radius)
         surf.blit(font.render(self.label, True, colors.WHITE), (self.pos[0]-4, self.pos[1]-8))
 
+    def render_active(self, surf: Surface) -> None:
+        draw.arc(surf, colors.WHITE, get_rect_from_circle(self.pos, self.radius), 0, 360)
+
     def start_bfs(self) -> None:
         self.dist = 0
         self.color = colors.GREEN
@@ -29,5 +34,5 @@ class Vertex:
         self.visited = True
         self.color = colors.GREEN
 
-    def get_pos(self) -> tuple[int, int]:
-        return self.pos
+    def contains(self, mouse_pos: tuple[int, int]) -> bool:
+        return get_rect_from_circle(self.pos, self.radius).contains(mouse_pos[0], mouse_pos[1], 1, 1)

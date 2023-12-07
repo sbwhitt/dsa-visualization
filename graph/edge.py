@@ -11,4 +11,4 @@ class Edge:
         self.color = color
 
     def render(self, surf: Surface) -> None:
-        draw.line(surf, self.color, self.start.get_pos(), self.end.get_pos(), width=2)
+        draw.line(surf, self.color, self.start.pos, self.end.pos, width=2)

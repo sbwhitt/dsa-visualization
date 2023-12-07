@@ -25,14 +25,21 @@ class Graph:
             'f': [],
             'g': []
         }
+        self.active_search: 'bfs' | 'dfs' = 'bfs'
         self._init_bfs()
 
-    def update_bfs(self, dt: int) -> None:
+    def update(self, dt: int) -> None:
         self.bfs_timer += dt
         if self.bfs_q.empty() or self.bfs_timer / dt < 50:
             return
         self.bfs_timer = 0
         self._run_bfs_loop()
+
+    def restart_bfs(self) -> None:
+        for _, v in self.verts.items():
+            v.dist = -1
+            v.color = colors.RED
+        self._init_bfs()
 
     def render(self, surf: Surface, font: Font) -> None:
         for k, v in self.edges.items():
@@ -52,9 +59,7 @@ class Graph:
                 self.current.color = colors.BLUE
 
     def _init_bfs(self) -> None:
-        self.current = self.verts['a']
-        self.current.dist = 0
-        self.current.color = colors.GREEN
-        self.bfs_q = Queue()
-        self.bfs_q.put(self.current)
+        self.bfs_q: Queue[Vertex] = Queue()
+        self.bfs_q.put(self.verts['a'])
+        self.bfs_q.queue[0].visit()
         self.bfs_timer = 0

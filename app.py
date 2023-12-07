@@ -31,11 +31,18 @@ class App:
     def on_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.QUIT:
             self.running = False
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+        if event.type == pygame.KEYDOWN:
+            self.handle_key(event.key)
+
+    def handle_key(self, key: int) -> None:
+        if key == pygame.K_ESCAPE:
             self.running = False
+        elif key == pygame.K_r:
+            self.g.restart_bfs()
+
 
     def on_loop(self, dt: int) -> None:
-        self.g.update_bfs(dt)
+        self.g.update(dt)
         return
 
     def on_render(self) -> None:

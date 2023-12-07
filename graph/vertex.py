@@ -20,5 +20,9 @@ class Vertex:
         draw.circle(surf, self.color, self.pos, self.radius)
         surf.blit(font.render(self.label, True, colors.WHITE), (self.pos[0]-4, self.pos[1]-8))
 
+    def visit(self) -> None:
+        self.dist = 0
+        self.color = colors.GREEN
+
     def get_pos(self) -> tuple[int, int]:
         return self.pos

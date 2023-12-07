@@ -11,14 +11,16 @@ class App:
             win_size, pygame.SCALED | pygame.RESIZABLE | pygame.DOUBLEBUF)
         self.font = self._init_font()
         self.g = Graph()
+        self.clock = pygame.time.Clock()
 
     def on_execute(self) -> None:
         self.on_init()
 
         while self.running:
+            dt = self.clock.tick_busy_loop(60)
             for event in pygame.event.get():
                 self.on_event(event)
-            self.on_loop()
+            self.on_loop(dt)
             self.on_render()
 
         self.on_cleanup()
@@ -32,8 +34,8 @@ class App:
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             self.running = False
 
-    def on_loop(self) -> None:
-        #if not self.g.bfs_done: self.g.update_bfs()
+    def on_loop(self, dt: int) -> None:
+        self.g.update_bfs(dt)
         return
 
     def on_render(self) -> None:

@@ -7,27 +7,32 @@ import utils.colors as colors
 
 class Graph:
     def __init__(self) -> None:
-        self.verts = {
-            'a': Vertex('a', pos=(100, 100)),
+        self.verts: dict[str, Vertex] = {
+            'a': Vertex('a', pos=(150, 100)),
             'b': Vertex('b', pos=(100, 200)),
-            'c': Vertex('c', pos=(200, 150))
+            'c': Vertex('c', pos=(200, 200)),
+            'd': Vertex('d', pos=(100, 300)),
+            'e': Vertex('e', pos=(200, 300)),
+            'f': Vertex('f', pos=(300, 300)),
+            'g': Vertex('g', pos=(100, 400))
         }
         self.edges: dict[str, list[Vertex]] = {
             'a': [self.verts['b'], self.verts['c']],
-            'b': [],
-            'c': []
+            'b': [self.verts['d']],
+            'c': [self.verts['e'], self.verts['f']],
+            'd': [self.verts['g']],
+            'e': [],
+            'f': [],
+            'g': []
         }
         self._init_bfs()
 
-    def update_bfs(self) -> list[int]:
-        if self.bfs_q.empty(): self.bfs_done = True
-        self.current: Vertex = self.bfs_q.get()
-        if not self.edges.get(self.current.label): return
-        for v in self.edges.get(self.current.label):
-            if v.dist == -1:
-                self.bfs_q.put(v)
-                v.dist = self.current.dist + 1
-                v.color = colors.GREEN
+    def update_bfs(self, dt: int) -> None:
+        self.bfs_timer += dt
+        if self.bfs_q.empty() or self.bfs_timer / dt < 50:
+            return
+        self.bfs_timer = 0
+        self._run_bfs_loop()
 
     def render(self, surf: Surface, font: Font) -> None:
         for k, v in self.edges.items():
@@ -36,10 +41,20 @@ class Graph:
         for _, v in self.verts.items():
             v.render(surf, font)
 
+    def _run_bfs_loop(self) -> None:
+        self.current: Vertex = self.bfs_q.get()
+        if not self.edges.get(self.current.label): return
+        for v in self.edges.get(self.current.label):
+            if v.dist == -1:
+                self.bfs_q.put(v)
+                v.dist = self.current.dist + 1
+                v.color = colors.GREEN
+                self.current.color = colors.BLUE
+
     def _init_bfs(self) -> None:
         self.current = self.verts['a']
         self.current.dist = 0
         self.current.color = colors.GREEN
         self.bfs_q = Queue()
         self.bfs_q.put(self.current)
-        self.bfs_done = False
+        self.bfs_timer = 0

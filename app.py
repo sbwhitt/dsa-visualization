@@ -20,7 +20,7 @@ class App:
             dt = self.clock.tick_busy_loop(60)
             for event in pygame.event.get():
                 self.on_event(event)
-            self.on_loop(dt)
+            self.on_loop()
             self.on_render()
 
         self.on_cleanup()
@@ -40,9 +40,8 @@ class App:
         elif key == pygame.K_r:
             self.g.restart_bfs()
 
-
-    def on_loop(self, dt: int) -> None:
-        self.g.update(dt)
+    def on_loop(self) -> None:
+        self.g.update()
         return
 
     def on_render(self) -> None:

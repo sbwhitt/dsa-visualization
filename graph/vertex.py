@@ -14,6 +14,7 @@ class Vertex:
         self.label = label
         self.radius = radius
         self.color = color
+        self.dist = -1
 
     def render(self, surf: Surface, font: Font) -> None:
         draw.circle(surf, self.color, self.pos, self.radius)

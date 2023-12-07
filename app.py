@@ -1,7 +1,6 @@
 import pygame
 import utils.colors as colors
-from graph.vertex import Vertex
-from graph.edge import Edge
+from graph.graph import Graph
 
 win_size = (960, 720)
 
@@ -11,8 +10,7 @@ class App:
         self.surf = pygame.display.set_mode(
             win_size, pygame.SCALED | pygame.RESIZABLE | pygame.DOUBLEBUF)
         self.font = self._init_font()
-        self.verts = [Vertex('a', pos=(100, 100)), Vertex('b', pos=(100, 200)), Vertex('c', pos=(200, 150))]
-        self.edges = [Edge(self.verts[0], self.verts[1]), Edge(self.verts[0], self.verts[2])]
+        self.g = Graph()
 
     def on_execute(self) -> None:
         self.on_init()
@@ -35,13 +33,13 @@ class App:
             self.running = False
 
     def on_loop(self) -> None:
-        pass
+        #if not self.g.bfs_done: self.g.update_bfs()
+        return
 
     def on_render(self) -> None:
         self.surf.fill(colors.BLACK)
 
-        for e in self.edges: e.render(self.surf)
-        for v in self.verts: v.render(self.surf, self.font)
+        self.g.render(self.surf, self.font)
 
         pygame.display.flip()
 

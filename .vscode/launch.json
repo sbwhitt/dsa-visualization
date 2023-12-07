@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "name": "debug",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}

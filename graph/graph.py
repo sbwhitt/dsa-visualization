@@ -87,13 +87,13 @@ class Graph:
         if self.bfs_q.empty():
             return
         self.current: Vertex = self.bfs_q.get()
-        if not self.edges.get(self.current.label): return
-        for v in self.edges.get(self.current.label):
-            if v.dist == -1:
-                self.bfs_q.put(v)
-                v.dist = self.current.dist + 1
-                v.color = colors.GREEN
-                self.current.color = colors.BLUE
+        if self.edges.get(self.current.label):
+            for v in self.edges.get(self.current.label):
+                if v.dist == -1:
+                    self.bfs_q.put(v)
+                    v.dist = self.current.dist + 1
+                    v.color = colors.GREEN
+        self.current.color = colors.BLUE
 
     def _init_dfs(self) -> None:
         pass

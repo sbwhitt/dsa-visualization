@@ -7,8 +7,8 @@ from utils.events import *
 class UI:
     def __init__(self, win_size: tuple[int, int]) -> None:
         self.elements: list[ClickableElement] = [
-            Button(BFS_EVENT, 'bfs', (win_size[0]-150, 25)),
-            Button(DFS_EVENT, 'dfs', (win_size[0]-150, 125))
+            Button(BFS_START, 'bfs', (win_size[0]-150, 25)),
+            Button(DFS_START, 'dfs', (win_size[0]-150, 125))
         ]
         self.active = None
 

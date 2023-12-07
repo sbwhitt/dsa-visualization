@@ -39,9 +39,9 @@ class App:
             self.handle_key(event.key)
         elif event.type == pygame.MOUSEBUTTONDOWN:
             self.handle_mouse()
-        elif event.type == BFS_EVENT:
+        elif event.type == BFS_START:
             self.g.set_bfs()
-        elif event.type == DFS_EVENT:
+        elif event.type == DFS_START:
             self.g.set_dfs()
 
     def handle_key(self, key: int) -> None:

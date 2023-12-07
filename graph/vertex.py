@@ -7,7 +7,7 @@ import utils.colors as colors
 class Vertex:
     def __init__(self,
                  label: str,
-                 pos: tuple[int, int] = (0, 0),
+                 pos: tuple[int, int] = (10, 10),
                  radius: int = 20,
                  color: Color = colors.RED) -> None:
         self.pos = pos

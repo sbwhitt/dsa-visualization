@@ -5,6 +5,9 @@ from graph.vertex import Vertex
 from graph.edge import Edge
 import utils.colors as colors
 
+BFS: int = 0
+DFS: int = 1
+
 class Graph:
     def __init__(self) -> None:
         self.verts: dict[str, Vertex] = {
@@ -31,22 +34,32 @@ class Graph:
             'i': [self.verts['f']],
             'j': []
         }
-        self.loop_timer = 0
-        self._init_bfs()
+        self.alg = BFS
+        self.start_alg()
 
     def update(self) -> None:
-        self.loop_timer += 1
-        if self.bfs_q.empty() or self.loop_timer < 30:
+        if not self._update_timer():
             return
+        if self.alg == BFS:
+            self._run_bfs_loop()
+        elif self.alg == DFS:
+            pass
         self.loop_timer = 0
-        self._run_bfs_loop()
 
-    def restart_bfs(self) -> None:
-        self.loop_timer = 0
-        for _, v in self.verts.items():
-            v.dist = -1
-            v.color = colors.RED
-        self._init_bfs()
+    def set_bfs(self) -> None:
+        self.alg = BFS
+        self.start_alg()
+
+    def set_dfs(self) -> None:
+        self.alg = DFS
+        self.start_alg()
+
+    def start_alg(self) -> None:
+        self._reset()
+        if self.alg == BFS:
+            self._init_bfs()
+        elif self.alg == DFS:
+            self._init_dfs()
 
     def render(self, surf: Surface, font: Font) -> None:
         for k, v in self.edges.items():
@@ -55,7 +68,24 @@ class Graph:
         for _, v in self.verts.items():
             v.render(surf, font)
 
+    def _reset(self) -> None:
+        self.loop_timer = 0
+        for _, v in self.verts.items():
+            v.dist = -1
+            v.color = colors.RED
+
+    def _update_timer(self) -> bool:
+        self.loop_timer += 1
+        return self.loop_timer > 30
+
+    def _init_bfs(self) -> None:
+        self.bfs_q: Queue[Vertex] = Queue()
+        self.bfs_q.put(self.verts['a'])
+        self.bfs_q.queue[0].visit()
+
     def _run_bfs_loop(self) -> None:
+        if self.bfs_q.empty():
+            return
         self.current: Vertex = self.bfs_q.get()
         if not self.edges.get(self.current.label): return
         for v in self.edges.get(self.current.label):
@@ -65,7 +95,8 @@ class Graph:
                 v.color = colors.GREEN
                 self.current.color = colors.BLUE
 
-    def _init_bfs(self) -> None:
-        self.bfs_q: Queue[Vertex] = Queue()
-        self.bfs_q.put(self.verts['a'])
-        self.bfs_q.queue[0].visit()
+    def _init_dfs(self) -> None:
+        pass
+
+    def _run_dfs_loop(self) -> None:
+        pass

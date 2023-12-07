@@ -1,6 +1,8 @@
 import pygame
 import utils.colors as colors
+from utils.events import *
 from graph.graph import Graph
+from ui.ui import UI
 
 win_size = (960, 720)
 
@@ -12,6 +14,7 @@ class App:
         self.font = self._init_font()
         self.g = Graph()
         self.clock = pygame.time.Clock()
+        self.ui = UI(win_size)
 
     def on_execute(self) -> None:
         self.on_init()
@@ -31,23 +34,38 @@ class App:
     def on_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.QUIT:
             self.running = False
-        if event.type == pygame.KEYDOWN:
+        elif event.type == pygame.KEYDOWN:
             self.handle_key(event.key)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            self.handle_mouse()
+        elif event.type == BFS_EVENT:
+            self.g.set_bfs()
+        elif event.type == DFS_EVENT:
+            self.g.set_dfs()
 
     def handle_key(self, key: int) -> None:
         if key == pygame.K_ESCAPE:
             self.running = False
         elif key == pygame.K_r:
-            self.g.restart_bfs()
+            self.g.start_alg()
+
+    def handle_mouse(self) -> None:
+        # mouse buttons: 0 == left, 1 == middle, 2 == right
+        buttons = pygame.mouse.get_pressed()
+        if buttons[0]:
+            self.ui.click()
 
     def on_loop(self) -> None:
         self.g.update()
+        self.ui.update(pygame.mouse.get_pos())
         return
 
     def on_render(self) -> None:
         self.surf.fill(colors.BLACK)
 
         self.g.render(self.surf, self.font)
+
+        self.ui.render(self.surf, self.font)
 
         pygame.display.flip()
 

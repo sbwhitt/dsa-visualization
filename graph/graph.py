@@ -20,7 +20,8 @@ class Graph:
             'g': Vertex('g', pos=(100, 400)),
             'h': Vertex('h', pos=(300, 400)),
             'i': Vertex('i', pos=(300, 200)),
-            'j': Vertex('j', pos=(100, 500))
+            'j': Vertex('j', pos=(100, 500)),
+            'k': Vertex('k', pos=(400, 300))
         }
         self.edges: dict[str, list[Vertex]] = {
             'a': [self.verts['b'], self.verts['c'], self.verts['i']],
@@ -31,7 +32,7 @@ class Graph:
             'f': [self.verts['h']],
             'g': [self.verts['h'], self.verts['j']],
             'h': [],
-            'i': [self.verts['f']],
+            'i': [self.verts['f'], self.verts['k']],
             'j': []
         }
         self.alg = BFS

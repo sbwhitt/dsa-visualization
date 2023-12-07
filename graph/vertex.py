@@ -3,7 +3,9 @@ from pygame import draw
 from pygame.surface import Surface
 from pygame.font import Font
 from pygame.color import Color
+from pygame.event import post, Event
 from utils.helpers import get_rect_from_circle
+from utils.events import *
 import utils.colors as colors
 
 class Vertex(ClickableElement):
@@ -36,3 +38,6 @@ class Vertex(ClickableElement):
 
     def contains(self, mouse_pos: tuple[int, int]) -> bool:
         return get_rect_from_circle(self.pos, self.radius).contains(mouse_pos[0], mouse_pos[1], 1, 1)
+
+    def click(self) -> None:
+        post(Event(VERT_SELECT, dict={'label': self.label}))

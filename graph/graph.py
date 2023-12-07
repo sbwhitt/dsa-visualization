@@ -1,4 +1,5 @@
 from queue import Queue
+from queue import LifoQueue
 from pygame.surface import Surface
 from pygame.font import Font
 from graph.vertex import Vertex
@@ -21,19 +22,24 @@ class Graph:
             'h': Vertex('h', pos=(300, 400)),
             'i': Vertex('i', pos=(300, 200)),
             'j': Vertex('j', pos=(100, 500)),
-            'k': Vertex('k', pos=(400, 300))
+            'k': Vertex('k', pos=(400, 300)),
+            'l': Vertex('l', pos=(400, 400)),
+            'm': Vertex('m', pos=(400, 500))
         }
         self.edges: dict[str, list[Vertex]] = {
             'a': [self.verts['b'], self.verts['c'], self.verts['i']],
             'b': [self.verts['d']],
-            'c': [self.verts['e'], self.verts['f']],
+            'c': [self.verts['e']],
             'd': [self.verts['g']],
-            'e': [],
+            'e': [self.verts['h']],
             'f': [self.verts['h']],
-            'g': [self.verts['h'], self.verts['j']],
-            'h': [],
+            'g': [self.verts['j']],
+            'h': [self.verts['m']],
             'i': [self.verts['f'], self.verts['k']],
-            'j': []
+            'j': [],
+            'k': [self.verts['l']],
+            'l': [],
+            'm': []
         }
         self.alg = BFS
         self.start_alg()
@@ -44,7 +50,7 @@ class Graph:
         if self.alg == BFS:
             self._run_bfs_loop()
         elif self.alg == DFS:
-            pass
+            self._run_dfs_loop()
         self.loop_timer = 0
 
     def set_bfs(self) -> None:
@@ -73,6 +79,7 @@ class Graph:
         self.loop_timer = 0
         for _, v in self.verts.items():
             v.dist = -1
+            v.visited = False
             v.color = colors.RED
 
     def _update_timer(self) -> bool:
@@ -82,7 +89,7 @@ class Graph:
     def _init_bfs(self) -> None:
         self.bfs_q: Queue[Vertex] = Queue()
         self.bfs_q.put(self.verts['a'])
-        self.bfs_q.queue[0].visit()
+        self.bfs_q.queue[0].start_bfs()
 
     def _run_bfs_loop(self) -> None:
         if self.bfs_q.empty():
@@ -97,7 +104,18 @@ class Graph:
         self.current.color = colors.BLUE
 
     def _init_dfs(self) -> None:
-        pass
+        self.dfs_q: LifoQueue[Vertex] = LifoQueue()
+        self.dfs_q.put(self.verts['a'])
+        self.dfs_q.queue[0].start_dfs()
 
     def _run_dfs_loop(self) -> None:
-        pass
+        if self.dfs_q.empty():
+            return
+        self.current: Vertex = self.dfs_q.get()
+        if self.edges.get(self.current.label):
+            for v in self.edges.get(self.current.label):
+                if not v.visited:
+                    self.dfs_q.put(v)
+                    v.visited = True
+                    v.color = colors.GREEN
+        self.current.color = colors.BLUE

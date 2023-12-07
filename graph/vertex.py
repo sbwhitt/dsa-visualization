@@ -15,13 +15,18 @@ class Vertex:
         self.radius = radius
         self.color = color
         self.dist = -1
+        self.visited = False
 
     def render(self, surf: Surface, font: Font) -> None:
         draw.circle(surf, self.color, self.pos, self.radius)
         surf.blit(font.render(self.label, True, colors.WHITE), (self.pos[0]-4, self.pos[1]-8))
 
-    def visit(self) -> None:
+    def start_bfs(self) -> None:
         self.dist = 0
+        self.color = colors.GREEN
+
+    def start_dfs(self) -> None:
+        self.visited = True
         self.color = colors.GREEN
 
     def get_pos(self) -> tuple[int, int]:

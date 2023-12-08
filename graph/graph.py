@@ -63,9 +63,9 @@ class Graph:
 
     def start_alg(self) -> None:
         self._reset()
-        if self.alg == BFS:
+        if self.alg == BFS and self.verts:
             self._init_bfs()
-        elif self.alg == DFS:
+        elif self.alg == DFS and self.verts:
             self._init_dfs()
 
     def render(self, surf: Surface, font: Font) -> None:

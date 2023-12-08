@@ -33,7 +33,7 @@ class UI:
             elif button == 'right': self.active.right_click()
 
     def add_elements(self, elements: list[ClickableElement]) -> None:
-        self.elements += elements
+        self.elements = elements + self.elements
 
     def delete_element(self, el: ClickableElement) -> None:
         self.elements.remove(el)

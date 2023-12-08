@@ -15,7 +15,6 @@ class App:
         self.g = Graph()
         self.clock = pygame.time.Clock()
         self.ui = UI(win_size)
-        self.ui.add_elements(self.g.get_vertices())
 
     def on_execute(self) -> None:
         self.on_init()
@@ -46,8 +45,7 @@ class App:
         elif event.type == VERT_SELECT:
             self.g.verts[event.label].bind(pygame.mouse.get_pos)
         elif event.type == VERT_DELETE:
-            deleted = self.g.delete_vertex(event.label)
-            self.ui.delete_element(deleted)
+            self.g.delete_vertex(event.label)
 
     def handle_key(self, key: int) -> None:
         if key == pygame.K_ESCAPE:
@@ -67,15 +65,13 @@ class App:
 
     def on_loop(self) -> None:
         self.g.update()
-        self.ui.update(pygame.mouse.get_pos())
+        self.ui.update(pygame.mouse.get_pos(), self.g)
         return
 
     def on_render(self) -> None:
         self.surf.fill(colors.BLACK)
 
-        self.g.render(self.surf, self.font)
-
-        self.ui.render(self.surf, self.font)
+        self.ui.render(self.surf, self.font, self.g)
 
         pygame.display.flip()
 

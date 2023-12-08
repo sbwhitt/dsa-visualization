@@ -76,6 +76,9 @@ class Graph:
     def get_vertices(self) -> list[Vertex]:
         return [v for _, v in self.verts.items()]
 
+    def get_edge(self, v1: Vertex, v2: Vertex) -> Edge:
+        return Edge(v1, v2)
+
     def delete_vertex(self, label: str) -> Vertex:
         '''
         returns deleted vertex

@@ -1,4 +1,5 @@
 from typing import Literal
+from graph.graph import Graph
 from pygame.surface import Surface
 from pygame.font import Font
 from ui.button import Button
@@ -13,16 +14,32 @@ class UI:
         ]
         self.active = None
 
-    def update(self, mouse_pos: tuple[int, int]) -> None:
+    def _update_graph(self, mouse_pos: tuple[int, int], graph: Graph) -> None:
+        for _, v in graph.verts.items():
+            v.update()
+            if v.contains(mouse_pos):
+                self.active = v
+
+    def update(self, mouse_pos: tuple[int, int], graph: Graph) -> None:
         self.active = None
         for el in self.elements:
-            el.update()
             if el.contains(mouse_pos):
                 self.active = el
+        self._update_graph(mouse_pos, graph)
 
-    def render(self, surf: Surface, font: Font) -> None:
+    def _render_graph(self, surf: Surface, font: Font, graph: Graph) -> None:
+        for k, v in graph.edges.items():
+            for vert in v:
+                graph.get_edge(graph.verts[k], vert).render(surf)
+        for _, v in graph.verts.items():
+            v.render(surf, font)
+
+    def render(self, surf: Surface, font: Font, graph: Graph) -> None:
+        self._render_graph(surf, font, graph)
+
         for el in self.elements:
             el.render(surf, font)
+
         if self.active:
             self.active.render_active(surf)
 

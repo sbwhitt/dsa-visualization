@@ -45,6 +45,8 @@ class App:
             self.g.set_dfs()
         elif event.type == VERT_SELECT:
             self.g.verts[event.label].bind(pygame.mouse.get_pos)
+        elif event.type == VERT_DELETE:
+            self.g.delete_vertex(event.label)
 
     def handle_key(self, key: int) -> None:
         if key == pygame.K_ESCAPE:
@@ -56,7 +58,11 @@ class App:
         # mouse buttons: 0 == left, 1 == middle, 2 == right
         buttons = pygame.mouse.get_pressed()
         if buttons[0]:
-            self.ui.click()
+            self.ui.click('left')
+        elif buttons[1]:
+            self.ui.click('middle')
+        elif buttons[2]:
+            self.ui.click('right')
 
     def on_loop(self) -> None:
         self.g.update()

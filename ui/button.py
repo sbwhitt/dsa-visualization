@@ -27,7 +27,7 @@ class Button(ClickableElement):
     def render_active(self, surf: Surface) -> None:
         draw.lines(surf, colors.WHITE, True, get_rect_outline(self.rect))
 
-    def click(self) -> None:
+    def left_click(self) -> None:
         post(self.event)
 
     def contains(self, mouse_pos: tuple[int, int]) -> bool:

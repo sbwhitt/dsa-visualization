@@ -48,9 +48,12 @@ class Vertex(ClickableElement):
     def contains(self, mouse_pos: tuple[int, int]) -> bool:
         return get_rect_from_circle(self.pos, self.radius).contains(mouse_pos[0], mouse_pos[1], 1, 1)
 
-    def click(self) -> None:
+    def left_click(self) -> None:
         if self.bound_pos:
             post(Event(VERT_DESELECT, label=self.label))
             self.bound_pos = None
         else:
             post(Event(VERT_SELECT, label=self.label))
+
+    def right_click(self) -> None:
+        post(Event(VERT_DELETE, label=self.label))

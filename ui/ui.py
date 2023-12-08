@@ -1,3 +1,4 @@
+from typing import Literal
 from pygame.surface import Surface
 from pygame.font import Font
 from ui.button import Button
@@ -25,9 +26,11 @@ class UI:
         if self.active:
             self.active.render_active(surf)
 
-    def click(self) -> None:
+    def click(self, button: Literal['left', 'middle', 'right']) -> None:
         if self.active:
-            self.active.click()
+            if button == 'left': self.active.left_click()
+            elif button == 'middle': self.active.middle_click()
+            elif button == 'right': self.active.right_click()
 
     def add_elements(self, elements: list[ClickableElement]) -> None:
         self.elements += elements

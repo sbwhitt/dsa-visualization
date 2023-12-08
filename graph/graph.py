@@ -72,11 +72,13 @@ class Graph:
         for k, v in self.edges.items():
             for vert in v:
                 Edge(self.verts[k], vert).render(surf)
-        for _, v in self.verts.items():
-            v.render(surf, font)
 
     def get_vertices(self) -> list[Vertex]:
         return [v for _, v in self.verts.items()]
+
+    def delete_vertex(self, label: str) -> None:
+        # self.verts.pop(label)
+        pass
 
     def _reset(self) -> None:
         self.loop_timer = 0

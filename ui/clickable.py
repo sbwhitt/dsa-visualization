@@ -14,5 +14,11 @@ class ClickableElement:
     def contains(self, mouse_pos: tuple[int, int]) -> bool:
         pass
 
-    def click(self) -> None:
+    def left_click(self) -> None:
+        pass
+
+    def middle_click(self) -> None:
+        pass
+
+    def right_click(self) -> None:
         pass

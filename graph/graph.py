@@ -76,9 +76,17 @@ class Graph:
     def get_vertices(self) -> list[Vertex]:
         return [v for _, v in self.verts.items()]
 
-    def delete_vertex(self, label: str) -> None:
-        # self.verts.pop(label)
-        pass
+    def delete_vertex(self, label: str) -> Vertex:
+        '''
+        returns deleted vertex
+        '''
+        for _, v in self.edges.items():
+            if self.verts[label] in v:
+                v.remove(self.verts[label])
+        d = self.verts.pop(label)
+        self.edges.pop(label)
+        self.start_alg()
+        return d
 
     def _reset(self) -> None:
         self.loop_timer = 0
@@ -93,7 +101,8 @@ class Graph:
 
     def _init_bfs(self) -> None:
         self.bfs_q: Queue[Vertex] = Queue()
-        self.bfs_q.put(self.verts['a'])
+        first = list(self.verts.keys())[0]
+        self.bfs_q.put(self.verts[first])
         self.bfs_q.queue[0].start_bfs()
 
     def _run_bfs_loop(self) -> None:
@@ -110,7 +119,8 @@ class Graph:
 
     def _init_dfs(self) -> None:
         self.dfs_q: LifoQueue[Vertex] = LifoQueue()
-        self.dfs_q.put(self.verts['a'])
+        first = list(self.verts.keys())[0]
+        self.dfs_q.put(self.verts[first])
         self.dfs_q.queue[0].start_dfs()
 
     def _run_dfs_loop(self) -> None:

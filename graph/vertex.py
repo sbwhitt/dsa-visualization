@@ -55,5 +55,5 @@ class Vertex(ClickableElement):
         else:
             post(Event(VERT_SELECT, label=self.label))
 
-    def right_click(self) -> None:
+    def middle_click(self) -> None:
         post(Event(VERT_DELETE, label=self.label))

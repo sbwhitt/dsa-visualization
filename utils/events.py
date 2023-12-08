@@ -1,4 +1,6 @@
-BFS_START     = 1000
-DFS_START     = 1001
-VERT_SELECT   = 1002
-VERT_DESELECT = 1003
+from pygame.event import custom_type
+
+BFS_START     = custom_type()
+DFS_START     = custom_type()
+VERT_SELECT   = custom_type()
+VERT_DESELECT = custom_type()

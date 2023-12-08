@@ -43,6 +43,8 @@ class App:
             self.g.set_bfs()
         elif event.type == DFS_START:
             self.g.set_dfs()
+        elif event.type == VERT_SELECT:
+            self.g.verts[event.label].bind(pygame.mouse.get_pos)
 
     def handle_key(self, key: int) -> None:
         if key == pygame.K_ESCAPE:

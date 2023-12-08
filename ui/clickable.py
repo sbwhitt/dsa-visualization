@@ -2,6 +2,9 @@ from pygame.surface import Surface
 from pygame.font import Font
 
 class ClickableElement:
+    def update(self) -> None:
+        pass
+
     def render(self, surf: Surface, font: Font) -> None:
         pass
 

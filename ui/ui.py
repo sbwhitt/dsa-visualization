@@ -15,9 +15,9 @@ class UI:
     def update(self, mouse_pos: tuple[int, int]) -> None:
         self.active = None
         for el in self.elements:
+            el.update()
             if el.contains(mouse_pos):
                 self.active = el
-                break
 
     def render(self, surf: Surface, font: Font) -> None:
         for el in self.elements:

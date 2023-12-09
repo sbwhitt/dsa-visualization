@@ -44,6 +44,8 @@ class App:
             self.g.set_dfs()
         elif event.type == VERT_SELECT:
             self.g.verts[event.label].bind(pygame.mouse.get_pos)
+        elif event.type == VERT_ADD:
+            self.g.add_vertex()
         elif event.type == VERT_DELETE:
             self.g.delete_vertex(event.label)
         elif event.type == VERT_LINK:

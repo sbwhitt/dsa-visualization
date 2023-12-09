@@ -81,6 +81,9 @@ class Graph:
     def _start_link(self, label: str) -> None:
         self.link = self.verts[label]
 
+    def add_vertex(self) -> None:
+        pass
+
     def delete_vertex(self, label: str) -> Vertex:
         '''
         returns deleted vertex

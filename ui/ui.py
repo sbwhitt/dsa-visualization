@@ -1,7 +1,9 @@
 from typing import Literal
 from graph.graph import Graph
+from graph.edge import render_edge
 from pygame.surface import Surface
 from pygame.font import Font
+from pygame.mouse import get_pos
 from ui.button import Button
 from ui.clickable import ClickableElement
 from utils.events import *
@@ -30,7 +32,9 @@ class UI:
     def _render_graph(self, surf: Surface, font: Font, graph: Graph) -> None:
         for k, v in graph.edges.items():
             for vert in v:
-                graph.get_edge(graph.verts[k], vert).render(surf)
+                render_edge(surf, graph.verts[k].pos, vert.pos)
+        if graph.link:
+            render_edge(surf, graph.link.pos, get_pos())
         for _, v in graph.verts.items():
             v.render(surf, font)
 

@@ -1,9 +1,6 @@
 from queue import Queue
 from queue import LifoQueue
-from pygame.surface import Surface
-from pygame.font import Font
 from graph.vertex import Vertex
-from graph.edge import Edge
 import utils.colors as colors
 
 BFS: int = 0
@@ -41,8 +38,9 @@ class Graph:
             'l': [],
             'm': []
         }
-        self.alg = BFS
+        self.alg: int = BFS
         self.start_alg()
+        self.link: Vertex = None
 
     def update(self) -> None:
         if not self._update_timer():
@@ -68,16 +66,20 @@ class Graph:
         elif self.alg == DFS and self.verts:
             self._init_dfs()
 
-    def render(self, surf: Surface, font: Font) -> None:
-        for k, v in self.edges.items():
-            for vert in v:
-                Edge(self.verts[k], vert).render(surf)
-
     def get_vertices(self) -> list[Vertex]:
         return [v for _, v in self.verts.items()]
 
-    def get_edge(self, v1: Vertex, v2: Vertex) -> Edge:
-        return Edge(v1, v2)
+    def handle_link(self, label: str) -> None:
+        if not self.link:
+            self._start_link(label)
+            return
+        elif self.link.label != label:
+            self.edges[self.link.label].append(self.verts[label])
+            self.edges[label].append(self.verts[self.link.label])
+        self.link = None
+
+    def _start_link(self, label: str) -> None:
+        self.link = self.verts[label]
 
     def delete_vertex(self, label: str) -> Vertex:
         '''

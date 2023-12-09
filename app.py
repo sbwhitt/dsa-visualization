@@ -46,6 +46,8 @@ class App:
             self.g.verts[event.label].bind(pygame.mouse.get_pos)
         elif event.type == VERT_DELETE:
             self.g.delete_vertex(event.label)
+        elif event.type == VERT_LINK:
+            self.g.handle_link(event.label)
 
     def handle_key(self, key: int) -> None:
         if key == pygame.K_ESCAPE:

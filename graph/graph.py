@@ -11,36 +11,8 @@ ALPHA = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', '
 
 class Graph:
     def __init__(self) -> None:
-        self.verts: dict[int, Vertex] = {
-            # 'a': Vertex('a', pos=(200, 100)),
-            # 'b': Vertex('b', pos=(100, 200)),
-            # 'c': Vertex('c', pos=(200, 200)),
-            # 'd': Vertex('d', pos=(100, 300)),
-            # 'e': Vertex('e', pos=(200, 300)),
-            # 'f': Vertex('f', pos=(300, 300)),
-            # 'g': Vertex('g', pos=(100, 400)),
-            # 'h': Vertex('h', pos=(300, 400)),
-            # 'i': Vertex('i', pos=(300, 200)),
-            # 'j': Vertex('j', pos=(100, 500)),
-            # 'k': Vertex('k', pos=(400, 300)),
-            # 'l': Vertex('l', pos=(400, 400)),
-            # 'm': Vertex('m', pos=(400, 500))
-        }
-        self.edges: dict[int, list[Vertex]] = {
-            # 'a': [self.verts['b'], self.verts['c'], self.verts['i']],
-            # 'b': [self.verts['d']],
-            # 'c': [self.verts['e']],
-            # 'd': [self.verts['g']],
-            # 'e': [self.verts['d'], self.verts['h']],
-            # 'f': [],
-            # 'g': [self.verts['j']],
-            # 'h': [self.verts['m']],
-            # 'i': [self.verts['e'], self.verts['f'], self.verts['k']],
-            # 'j': [],
-            # 'k': [self.verts['l']],
-            # 'l': [],
-            # 'm': []
-        }
+        self.verts: dict[int, Vertex] = {}
+        self.edges: dict[int, list[Vertex]] = {}
         self.vert_id = 0
         self.alg: int = BFS
         self.start_alg()

@@ -11,10 +11,12 @@ import utils.colors as colors
 
 class Vertex(ClickableElement):
     def __init__(self,
+                 id: int,
                  label: str,
-                 pos: tuple[int, int] = (10, 10),
+                 pos: tuple[int, int] = (40, 40),
                  radius: int = 20,
                  color: Color = colors.RED) -> None:
+        self.id = id
         self.pos = pos
         self.bound_pos = None
         self.label = label
@@ -50,13 +52,13 @@ class Vertex(ClickableElement):
 
     def left_click(self) -> None:
         if self.bound_pos:
-            post(Event(VERT_DESELECT, label=self.label))
+            post(Event(VERT_DESELECT, vert_id=self.id))
             self.bound_pos = None
         else:
-            post(Event(VERT_SELECT, label=self.label))
+            post(Event(VERT_SELECT, vert_id=self.id))
 
     def middle_click(self) -> None:
-        post(Event(VERT_DELETE, label=self.label))
+        post(Event(VERT_DELETE, vert_id=self.id))
 
     def right_click(self) -> None:
-        post(Event(VERT_LINK, label=self.label))
+        post(Event(VERT_LINK, vert_id=self.id))

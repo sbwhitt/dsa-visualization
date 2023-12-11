@@ -43,13 +43,13 @@ class App:
         elif event.type == DFS_START:
             self.g.set_dfs()
         elif event.type == VERT_SELECT:
-            self.g.verts[event.label].bind(pygame.mouse.get_pos)
+            self.g.verts[event.vert_id].bind(pygame.mouse.get_pos)
         elif event.type == VERT_ADD:
             self.g.add_vertex()
         elif event.type == VERT_DELETE:
-            self.g.delete_vertex(event.label)
+            self.g.delete_vertex(event.vert_id)
         elif event.type == VERT_LINK:
-            self.g.handle_link(event.label)
+            self.g.handle_link(event.vert_id)
 
     def handle_key(self, key: int) -> None:
         if key == pygame.K_ESCAPE:

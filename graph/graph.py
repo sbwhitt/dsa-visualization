@@ -78,6 +78,8 @@ class Graph:
                 v.remove(self.verts[id])
         d = self.verts.pop(id)
         self.edges.pop(id)
+        for i, v in enumerate(self.verts.items()):
+            v[1].label = ALPHA[i]
         self.start_alg()
         return d
 
